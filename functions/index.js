@@ -7,19 +7,7 @@ exports.createCodepen = onRequest(async (req, res) => {
 		return res.status(405).send('Method Not Allowed');
 	}
 
-	const { title, html } = JSON.parse(req.body.data);
-	logger.info(`Title: ${title}`, { structuredData: true });
-
-	if (!title || !html) {
-		return res.status(400).send('Bad Request: Missing required fields');
-	}
-
-	const data = JSON.stringify({
-		title,
-		html,
-	});
-
-	const formData = querystring.stringify({ data });
+	const formData = querystring.stringify({ data: req.body.data });
 
 	try {
 		const response = await fetch('https://codepen.io/pen/define', {
